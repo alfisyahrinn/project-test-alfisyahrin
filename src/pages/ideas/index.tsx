@@ -135,6 +135,7 @@ export default function Blog() {
   useEffect(() => {
     const pageSizeLocal = window.localStorage.getItem('pageSize');
     if (pageSizeLocal) {
+      getBlogs(pageSizeLocal);
       setPageSize(Number(pageSizeLocal));
     } else {
       setPageSize(10);
