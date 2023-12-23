@@ -1,6 +1,19 @@
-import '@/styles/globals.css'
-import type { AppProps } from 'next/app'
+import Navbar from '@/components/layouts/Navbar';
+import { Toaster } from '@/components/ui/toaster';
+import '@/styles/globals.css';
+import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  const disableNavbar = ['/404'];
+  const { pathname } = useRouter();
+  return (
+    <div>
+      {!disableNavbar.includes(pathname) && <Navbar />}
+      <div className="mt-16">
+        <Toaster />
+        <Component {...pageProps} />
+      </div>
+    </div>
+  );
 }
