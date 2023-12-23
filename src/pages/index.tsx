@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
+import Link from 'next/link';
 import React, { useState } from 'react';
 
 export default function Home() {
@@ -12,11 +13,14 @@ export default function Home() {
     setText('bambang');
   };
   return (
-    <div> 
-      <p>{text}</p>
-      <Button variant="secondary" onClick={keren}>
-        Click Me!
-      </Button>
+    <div>
+      <div className="flex flex-col gap-4 h-[80vh] justify-center items-center text-center">
+        <h1 className="text-lg font-bold">Service</h1>
+        <p className="">Silakan ke halaman ideas</p>
+        <Link href={'/ideas'}>
+          <Button variant="secondary">Lets' Go</Button>
+        </Link>
+      </div>
     </div>
   );
 }

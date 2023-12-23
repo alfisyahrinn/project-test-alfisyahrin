@@ -22,6 +22,34 @@
   z-index: 1000; /* Mengatur z-index agar tetap di atas elemen lain */
   transition: background-color 0.3s ease; /* Efek transisi untuk perubahan warna latar belakang */
 }
+.parallax-container {
+  position: relative;
+  height: 300px; /* Sesuaikan dengan tinggi yang diinginkan */
+  overflow: hidden;
+}
+
+.parallax-background {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  bottom: -50px; /* Atur pergeseran ke bawah yang diinginkan */
+  right: 0;
+  z-index: -1;
+  transform: scale(1.2); /* Sesuaikan dengan faktor skala yang diinginkan */
+  transition: transform 0.3s ease-in-out; /* Animasi ketika skala berubah */
+}
+
+.parallax-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  text-align: center;
+}
+
 /* 
 :root {
   --foreground-rgb: 0, 0, 0;

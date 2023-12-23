@@ -109,10 +109,45 @@ export default function Blog() {
 
   const handleFirstPage = () => {
     setCurrentPage(1);
+    if (targetRef.current !== null) {
+      targetRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   };
 
   const handleLastPage = () => {
     setCurrentPage(lastPage);
+    if (targetRef.current !== null) {
+      targetRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+  const handleNextPage = () => {
+    if (currentPage < lastPage) {
+      setCurrentPage(currentPage + 1);
+    }
+    if (targetRef.current !== null) {
+      targetRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+    if (targetRef.current !== null) {
+      targetRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   };
 
   const showEnd = currentPage * pageSize;
@@ -238,14 +273,14 @@ export default function Blog() {
                 {' '}
                 <ChevronsLeftIcon className="h-7 w-7" />
               </button>
-              <button>
+              <button onClick={handlePrevPage}>
                 {' '}
                 <ChevronLeft className="h-7 w-7" />
               </button>
             </div>
             {renderPageNumbers()}
             <div className="flex">
-              <button>
+              <button onClick={handleNextPage}>
                 {' '}
                 <ChevronRight className="h-7 w-7" />
               </button>
