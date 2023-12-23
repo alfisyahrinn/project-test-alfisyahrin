@@ -32,7 +32,7 @@ export default function Blog() {
         if (response.status === 200) {
           setdata(response.data.data);
           setIsLoading(false);
-          console.log('dare :', response.data);
+          console.log('dare :', response.data.data);
           setLastPage(response.data.meta.last_page);
         }
       })
@@ -122,7 +122,6 @@ export default function Blog() {
     const currentPageLocal = window.localStorage.getItem('currentPage');
     if (currentPageLocal) {
       setCurrentPage(Number(currentPageLocal));
-      getBlogs(10);
     } else {
       // Jika currentPageLocal tidak ada di localStorage, maka gunakan nilai default 10
       setCurrentPage(1); // Atau nilai default lainnya jika sesuai
@@ -135,6 +134,40 @@ export default function Blog() {
     console.log('menjalankan set : ', currentPage);
     window.localStorage.setItem('currentPage', JSON.stringify(currentPage));
   }, [currentPage]);
+
+  useEffect(() => {
+    const sortLocal = window.localStorage.getItem('sort');
+    if (sortLocal) {
+      setSort(String(sortLocal));
+    } else {
+      // Jika currentPageLocal tidak ada di localStorage, maka gunakan nilai default 10
+      setSort('-published_at');
+    }
+    console.log('di get : ', currentPage);
+  }, []);
+
+  // Setelah itu, gunakan useEffect untuk menyimpan currentPage ke localStorage saat currentPage berubah
+  useEffect(() => {
+    console.log('menjalankan set : ', sort);
+    window.localStorage.setItem('sort', sort);
+  }, [sort]);
+
+  useEffect(() => {
+    const pageSizeLocal = window.localStorage.getItem('pageSize');
+    if (pageSizeLocal) {
+      setPageSize(Number(pageSizeLocal));
+    } else {
+      // Jika currentPageLocal tidak ada di localStorage, maka gunakan nilai default 10
+      setPageSize(10);
+    }
+    console.log('di get : ', pageSize);
+  }, []);
+
+  // Setelah itu, gunakan useEffect untuk menyimpan currentPage ke localStorage saat currentPage berubah
+  useEffect(() => {
+    console.log('menjalankan set : ', pageSize);
+    window.localStorage.setItem('pageSize', JSON.stringify(pageSize));
+  }, [pageSize]);
 
   useEffect(() => {
     console.log('useEffect');
