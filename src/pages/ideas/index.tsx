@@ -20,7 +20,7 @@ export default function Blog() {
   const [data, setdata] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState('-published_at');
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState(274);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
@@ -141,24 +141,20 @@ export default function Blog() {
     }
   }, []);
 
+  // Function to store 'pageSize' in local storage when it changes
   useEffect(() => {
-    window.localStorage.setItem('pageSize', JSON.stringify(pageSize));
+    window.localStorage.setItem('pageSize', pageSize.toString());
   }, [pageSize]);
-
   useEffect(() => {
     const sortLocal = window.localStorage.getItem('sort');
     if (sortLocal) {
       setSort(String(sortLocal));
     } else {
-      // Jika currentPageLocal tidak ada di localStorage, maka gunakan nilai default 10
       setSort('-published_at');
     }
-    console.log('di get : ', currentPage);
   }, []);
 
-  // Setelah itu, gunakan useEffect untuk menyimpan currentPage ke localStorage saat currentPage berubah
   useEffect(() => {
-    console.log('menjalankan set : ', sort);
     window.localStorage.setItem('sort', sort);
   }, [sort]);
 
@@ -189,9 +185,9 @@ export default function Blog() {
                 Show per page:
               </label>
               <select id="showPerPage" value={pageSize} onChange={handlePage} className="py-2 px-7 border-gray-500 border-2 rounded-full">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
               </select>
             </div>
             <div className="flex items-center">
