@@ -205,7 +205,7 @@ export default function Blog() {
     <div>
       <div className=" h-[300px] relative overflow-hidden">
         {/* Gambar dengan posisi absolute, diatur di bawah teks */}
-        <img src="/papan-tulis.jpg" alt="hero" className="w-[100vw] absolute z-0 right-11 bottom-[70px] -rotate-6 transform scale-x-125" />
+        <img src="/papan-tulis.jpg" alt="hero" className="w-[100vw] absolute z-0 right-11 lg:bottom-[70px] -rotate-6 transform lg:scale-x-125 scale-x-150 bottom-[85px]" />
         <div className="flex flex-col justify-center items-center text-center relative z-10 h-full">
           <h1 className="text-white text-5xl">Ideas</h1>
           <p className="text-white text-lg">Where all our great things begin</p>
