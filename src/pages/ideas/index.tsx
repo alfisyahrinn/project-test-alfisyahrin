@@ -121,11 +121,11 @@ export default function Blog() {
   useEffect(() => {
     const currentPageLocal = window.localStorage.getItem('currentPage');
     if (currentPageLocal) {
-      setCurrentPage(3);
+      setCurrentPage(Number(currentPageLocal));
       getBlogs(10);
     } else {
       // Jika currentPageLocal tidak ada di localStorage, maka gunakan nilai default 10
-      setCurrentPage(12); // Atau nilai default lainnya jika sesuai
+      setCurrentPage(1); // Atau nilai default lainnya jika sesuai
     }
     console.log('di get : ', currentPage);
   }, []);
@@ -133,14 +133,13 @@ export default function Blog() {
   // Setelah itu, gunakan useEffect untuk menyimpan currentPage ke localStorage saat currentPage berubah
   useEffect(() => {
     console.log('menjalankan set : ', currentPage);
-
-    // window.localStorage.setItem('currentPage', JSON.stringify(currentPage));
+    window.localStorage.setItem('currentPage', JSON.stringify(currentPage));
   }, [currentPage]);
 
   useEffect(() => {
     console.log('useEffect');
     console.log('di Use', currentPage);
-    // getBlogs(10);
+    getBlogs(10);
   }, [pageSize, sort, currentPage]);
   const { toast } = useToast();
   return (
