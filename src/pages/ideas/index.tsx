@@ -162,7 +162,7 @@ export default function Blog() {
   useEffect(() => {
     console.log('useEffect');
     console.log('di Use', currentPage);
-    getBlogs(10);
+    getBlogs(pageSize);
   }, [pageSize, sort, currentPage]);
   const { toast } = useToast();
   return (
