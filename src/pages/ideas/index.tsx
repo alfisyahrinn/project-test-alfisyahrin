@@ -19,15 +19,15 @@ export default function Blog() {
   const API_URL = 'https://suitmedia-backend.suitdev.com/api/ideas';
   const [data, setdata] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [sort, setSort] = useState('-published_at');
+  const [sort, setSort] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [total, setTotal] = useState(274);
   const [currentPage, setCurrentPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
 
-  const getBlogs = (selectedPageSize: any) => {
+  const getBlogs = (selectedPageSize: number, sortPa: number) => {
     axios
-      .get(`${API_URL}?page[number]=${currentPage}&page[size]=${selectedPageSize}&sort=${sort}&append[]=small_image`)
+      .get(`${API_URL}?page[number]=${currentPage}&page[size]=${selectedPageSize}&sort=${sortPa == 1 ? '-published_at' : 'published_at'}&append[]=small_image`)
       .then((response) => {
         if (response.status === 200) {
           setdata(response.data.data);
@@ -44,7 +44,7 @@ export default function Blog() {
           description: error.message,
           title: error.response ? error.response.data.message : 'Somothing Wrong',
           action: (
-            <ToastAction altText="Try again" onClick={getBlogs}>
+            <ToastAction altText="Try again" onClick={() => getBlogs(pageSize, sort)}>
               Try again
             </ToastAction>
           ),
@@ -55,7 +55,7 @@ export default function Blog() {
   const handlePage = (e: any) => {
     const selectedPageSize = e.target.value;
     setPageSize(() => {
-      getBlogs(selectedPageSize);
+      getBlogs(selectedPageSize, sort);
       return selectedPageSize;
     });
   };
@@ -63,6 +63,7 @@ export default function Blog() {
   const handleSort = (e: any) => {
     setSort(e.target.value);
     setPageSize(10);
+    setCurrentPage(1);
   };
 
   const totalPages = lastPage;
@@ -135,7 +136,6 @@ export default function Blog() {
   useEffect(() => {
     const pageSizeLocal = window.localStorage.getItem('pageSize');
     if (pageSizeLocal) {
-      getBlogs(pageSizeLocal);
       setPageSize(Number(pageSizeLocal));
     } else {
       setPageSize(10);
@@ -146,23 +146,24 @@ export default function Blog() {
   useEffect(() => {
     window.localStorage.setItem('pageSize', pageSize.toString());
   }, [pageSize]);
+
   useEffect(() => {
     const sortLocal = window.localStorage.getItem('sort');
     if (sortLocal) {
-      setSort(String(sortLocal));
+      setSort(Number(sortLocal));
     } else {
-      setSort('-published_at');
+      setSort(1);
     }
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem('sort', sort);
+    window.localStorage.setItem('sort', sort.toString());
   }, [sort]);
 
   useEffect(() => {
     console.log('useEffect');
     console.log('di Use', currentPage);
-    getBlogs(pageSize);
+    getBlogs(pageSize, sort);
   }, [pageSize, sort, currentPage]);
   const { toast } = useToast();
   return (
@@ -196,8 +197,8 @@ export default function Blog() {
                 Sort by:
               </label>
               <select id="sortBy" value={sort} onChange={handleSort} className="py-2 px-7 border-gray-500 border-2 rounded-full">
-                <option value="-published_at">Newest</option>
-                <option value="published_at">Latest</option>
+                <option value={1}>Newest</option>
+                <option value={0}>Latest</option>
               </select>
             </div>
           </div>
