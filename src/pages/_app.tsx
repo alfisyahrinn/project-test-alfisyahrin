@@ -10,7 +10,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <div>
       {!disableNavbar.includes(pathname) && <Navbar />}
-      <div className="mt-16">
+      <div className=" bg-primary h-[64px]"></div>
+      <div>
         <Toaster />
         <Component {...pageProps} />
       </div>
